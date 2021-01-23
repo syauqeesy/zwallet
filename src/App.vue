@@ -1,6 +1,6 @@
 <template>
   <div class="App">
-    <h1>Zwallet</h1>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -13,9 +13,9 @@ export default {
 
 <style lang="css">
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
   /* border: 1px solid blue; */
 }
 </style>
