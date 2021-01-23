@@ -12,8 +12,5 @@ export default {
 </script>
 
 <style lang="css">
-* {
-  box-sizing: border-box !important;
-  /* border: 1px solid blue; */
-}
+
 </style>
