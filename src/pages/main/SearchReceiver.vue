@@ -1,6 +1,6 @@
 <template>
   <Header :avatar="user.avatar" :fullName="user.firstName + ' ' + user.lastName" :phoneNumber="user.phoneNumber" />
-  <div class="Home row container mx-auto">
+  <div class="SearchReceiver row container mx-auto">
     <aside class="col-md-4 p-3">
       <ul>
         <li class="mb-5">
@@ -54,23 +54,23 @@
       </ul>
     </aside>
     <main class="col-md-8 p-3">
-      <div class="card bg-primary text-white">
+      <form @submit.prevent="search">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" v-model="keyword" placeholder="Search receiver">
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+      </form>
+      <router-link to="/home" class="card mb-3 text-decoration-none text-dark" v-for="user in users" :key="user.id">
         <div class="card-body row">
-          <div class="col-md-10 mb-1">
-            <p class="small mb-1">Balance</p>
-            <p class="fw-bold fs-3">{{ user.balance }}</p>
-            <p class="small mb-0 mt-1">{{ user.phoneNumber }}</p>
+          <div class="col-1 d-flex align-items-center">
+            <img :src="user.avatar" class="avatar-picture d-inline" alt="Profile">
           </div>
-          <div class="col-md-2 mt-1">
-            <div class="d-grid mb-4">
-            <button class="btn btn-outline-light d-block" @click="$router.push({ path: '/search-receiver' })">Transfer</button>
-            </div>
-            <div class="d-grid">
-            <button class="btn btn-outline-light d-block">Top Up</button>
-            </div>
+          <div class="col-11">
+            <p class="my-0 fw-bold">{{ user.firstName + ' ' + user.lastName }}</p>
+            <p class="my-0 small text-muted">{{ user.phoneNumber }}</p>
           </div>
         </div>
-      </div>
+      </router-link>
     </main>
   </div>
 </template>
@@ -81,52 +81,78 @@ import swal from 'sweetalert2'
 import Header from '@/components/Header'
 
 export default {
-  name: 'Home',
+  name: 'SearchReceiver',
+  data () {
+    return {
+      keyword: ''
+    }
+  },
   components: {
     Header
   },
   computed: {
-    ...mapGetters(['user', 'credentials'])
+    ...mapGetters(['user', 'users', 'credentials'])
   },
   async mounted () {
     try {
       await this.getUser(this.credentials.userId)
+      await this.getUsers({
+          keyword: this.$route.query.keyword || '',
+          page: this.$route.query.page || 1
+        })
     } catch (error) {
       swal.fire(error.status, error.message, 'error')
     }
   },
   methods: {
-    ...mapActions(['getUser']),
+    ...mapActions(['getUser', 'getUsers']),
     logout () {
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
       this.$router.push({ path: '/auth/login' })
+    },
+    search () {
+      this.$router.push({ name: 'SearchReceiver', query: { keyword: this.keyword }})
+      this.keyword = ''
+    }
+  },
+  watch: {
+    async $route () {
+      try {
+        await this.getUsers({
+          keyword: this.$route.query.keyword || '',
+          page: this.$route.query.page || 1
+        })
+      } catch (error) {
+        swal.fire(error.status, error.message, 'error')
+      }
     }
   }
 }
 </script>
 
 <style scoped lang="css">
-div.Home ul {
+div.SearchReceiver ul {
   list-style: none;
 }
 
+
 @media (max-width: 768px) {
-  div.Home ul {
+  div.SearchReceiver ul {
     list-style: none;
     display: flex;
     justify-content: center;
     padding: 0;
   }
 
-  div.Home ul li {
+  div.SearchReceiver ul li {
     margin: 0 1em;
   }
 
-  div.Home ul li span {
+  div.SearchReceiver ul li span {
     display: none;
   }
-  div.Home .col-11 {
+  div.SearchReceiver .col-11 {
     margin-top: .5em;
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <Header :avatar="user.avatar" :fullName="user.firstName + ' ' + user.lastName" :phoneNumber="user.phoneNumber" />
-  <div class="Home row container mx-auto">
+  <div class="InputAmount row container mx-auto">
     <aside class="col-md-4 p-3">
       <ul>
         <li class="mb-5">
@@ -54,23 +54,7 @@
       </ul>
     </aside>
     <main class="col-md-8 p-3">
-      <div class="card bg-primary text-white">
-        <div class="card-body row">
-          <div class="col-md-10 mb-1">
-            <p class="small mb-1">Balance</p>
-            <p class="fw-bold fs-3">{{ user.balance }}</p>
-            <p class="small mb-0 mt-1">{{ user.phoneNumber }}</p>
-          </div>
-          <div class="col-md-2 mt-1">
-            <div class="d-grid mb-4">
-            <button class="btn btn-outline-light d-block" @click="$router.push({ path: '/search-receiver' })">Transfer</button>
-            </div>
-            <div class="d-grid">
-            <button class="btn btn-outline-light d-block">Top Up</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </main>
   </div>
 </template>
@@ -81,7 +65,7 @@ import swal from 'sweetalert2'
 import Header from '@/components/Header'
 
 export default {
-  name: 'Home',
+  name: 'InputAmount',
   components: {
     Header
   },
@@ -107,26 +91,26 @@ export default {
 </script>
 
 <style scoped lang="css">
-div.Home ul {
+div.InputAmount ul {
   list-style: none;
 }
 
 @media (max-width: 768px) {
-  div.Home ul {
+  div.InputAmount ul {
     list-style: none;
     display: flex;
     justify-content: center;
     padding: 0;
   }
 
-  div.Home ul li {
+  div.InputAmount ul li {
     margin: 0 1em;
   }
 
-  div.Home ul li span {
+  div.InputAmount ul li span {
     display: none;
   }
-  div.Home .col-11 {
+  div.InputAmount .col-11 {
     margin-top: .5em;
   }
 }

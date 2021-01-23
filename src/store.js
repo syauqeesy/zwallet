@@ -64,6 +64,7 @@ export default {
         password: ''
       },
       user: {},
+      users: [],
       token: null || localStorage.getItem('token'),
       userId: null || localStorage.getItem('userId')
     }
@@ -86,6 +87,11 @@ export default {
       return request(`/api/users/${payload}`, 'get', {}, (data) => {
         commit('setUser', data.data)
       })
+    },
+    getUsers ({ commit }, payload) {
+      return request(`/api/users?keyword=${payload.keyword}&page=${payload.page || 1}`, 'get', {}, (data) => {
+        commit('setUsers', data.data)
+      })
     }
   },
   mutations: {
@@ -96,6 +102,9 @@ export default {
     },
     setUser (state, payload) {
       state.user = payload
+    },
+    setUsers (state, payload) {
+      state.users = payload
     },
     setCredentials (state, payload) {
       state.token = payload.token
@@ -108,6 +117,9 @@ export default {
     },
     user (state) {
       return state.user
+    },
+    users (state) {
+      return state.users
     },
     credentials (state) {
       return {

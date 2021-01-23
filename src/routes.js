@@ -5,6 +5,7 @@ import AccountActivation from './pages/AccountActivation'
 import Login from './pages/auth/Login'
 
 import Home from './pages/main/Home'
+import SearchReceiver from './pages/main/SearchReceiver'
 
 export default [
   {
@@ -38,6 +39,12 @@ export default [
   {
     path: '/home',
     component: Home,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/search-receiver',
+    name: 'SearchReceiver',
+    component: SearchReceiver,
     meta: { requiresAuth: true }
   }
 ]
