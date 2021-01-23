@@ -71,6 +71,9 @@ export default {
   actions: {
     requestRegister (_, payload) {
       return request('/api/users/register', 'post', payload)
+    },
+    activateAccount (_, payload) {
+      return request('/api/users/activate', 'patch', payload)
     }
   },
   mutations: {
