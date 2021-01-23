@@ -12,5 +12,9 @@ export default {
 </script>
 
 <style lang="css">
-
+.avatar-picture {
+  width: 40px;
+  border: 1px solid;
+  border-radius: .25em;
+}
 </style>

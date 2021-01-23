@@ -10,6 +10,28 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, _, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!localStorage.getItem('token')) {
+      next({
+        path: '/auth/login'
+      })
+    } else {
+      next()
+    }
+  } else if (to.matched.some(record => record.meta.requiresVisitor)) {
+    if (localStorage.getItem('token')) {
+      next({
+        path: '/home'
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
 const app = createApp(App)
 const vuexStore = createStore(store)
 

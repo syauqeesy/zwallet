@@ -10,28 +10,34 @@ export default [
   {
     path: '/auth',
     component: Auth,
+    meta: { requiresVisitor: true },
     children: [
       {
         path: 'register',
-        component: Register
+        component: Register,
+        meta: { requiresVisitor: true }
       },
       {
         path: 'create-pin',
         name: 'CreatePIN',
-        component: CreatePIN
+        component: CreatePIN,
+        meta: { requiresVisitor: true }
       },
       {
         path: 'login',
-        component: Login
+        component: Login,
+        meta: { requiresVisitor: true }
       }
     ]
   },
   {
     path: '/activate',
-    component: AccountActivation
+    component: AccountActivation,
+    meta: { requiresVisitor: true }
   },
   {
     path: '/home',
-    component: Home
+    component: Home,
+    meta: { requiresAuth: true }
   }
 ]
