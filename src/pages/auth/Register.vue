@@ -1,5 +1,5 @@
 <template>
-  <form class="my-5" @submit.prevent="register">
+  <form class="my-5" @submit.prevent="createPIN">
     <div class="input-group mb-5">
       <span class="input-group-text p-2">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,7 +84,7 @@ export default {
       }
       this.passwordValidity = 'valid'
     },
-    register () {
+    createPIN () {
       if (this.userNameValidity !== 'valid' || this.emailValidity !== 'valid' || this.passwordValidity !== 'valid') {
         return alert('Fill the forms with a valid value!')
       }
@@ -95,6 +95,7 @@ export default {
         password: this.password
       }
       console.log(data)
+      this.$router.push({ path: '/auth/create-pin' })
     }
   }
 }

@@ -8,8 +8,10 @@
         <h3 class="text-white fw-light fs-5">Zwallet is an application that focussing in banking needs for all users in the world. Always updated and always following world trends. 5000+ users registered in Zwallet everyday with worldwide users coverage.</h3>
       </aside>
       <main class="col-5 p-4">
-        <h2 class="mb-5">Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users</h2>
-        <h3 class="text-muted fw-light fs-5">Transfering money is eassier than ever, you can access Zwallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</h3>
+        <h2 class="mb-5" v-if="$route.name !== 'CreatePIN'">Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users</h2>
+        <h3 class="text-muted fw-light fs-5" v-if="$route.name !== 'CreatePIN'">Transfering money is eassier than ever, you can access Zwallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</h3>
+        <h2 class="mb-5" v-if="$route.name === 'CreatePIN'">Secure Your Account, Your Wallet, and Your Data With 6 Digits PIN That You Created Yourself.</h2>
+        <h3 class="text-muted fw-light fs-5" v-if="$route.name === 'CreatePIN'">Create 6 digits pin to secure all your money and your data in Zwallet app. Keep it secret and don’t tell anyone about your Zwallet account password and the PIN.</h3>
         <router-view></router-view>
       </main>
     </div>

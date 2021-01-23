@@ -1,5 +1,6 @@
 import Auth from './pages/auth/Auth'
 import Register from './pages/auth/Register'
+import CreatePIN from './pages/auth/CreatePIN'
 import Login from './pages/auth/Login'
 
 export default [
@@ -10,6 +11,11 @@ export default [
       {
         path: 'register',
         component: Register
+      },
+      {
+        path: 'create-pin',
+        name: 'CreatePIN',
+        component: CreatePIN
       },
       {
         path: 'login',
