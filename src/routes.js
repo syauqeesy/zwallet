@@ -4,6 +4,8 @@ import CreatePIN from './pages/auth/CreatePIN'
 import AccountActivation from './pages/AccountActivation'
 import Login from './pages/auth/Login'
 
+import Home from './pages/main/Home'
+
 export default [
   {
     path: '/auth',
@@ -27,5 +29,9 @@ export default [
   {
     path: '/activate',
     component: AccountActivation
+  },
+  {
+    path: '/home',
+    component: Home
   }
 ]

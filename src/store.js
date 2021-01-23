@@ -14,7 +14,6 @@ const request = (url, method, data, callback = () => console.log('Request ran'))
           resolve(response.data)
         })
         .catch(error => {
-          callback(error.response.data)
           reject(error.response.data)
         })
         break;
@@ -29,7 +28,6 @@ const request = (url, method, data, callback = () => console.log('Request ran'))
           resolve(response.data)
         })
         .catch(error => {
-          callback(error.response.data)
           reject(error.response.data)
         })
         break;
@@ -44,7 +42,6 @@ const request = (url, method, data, callback = () => console.log('Request ran'))
           resolve(response.data)
         })
         .catch(error => {
-          callback(error.response.data)
           reject(error.response.data)
         })
         break;
@@ -65,7 +62,10 @@ export default {
         userName: '',
         email: '',
         password: ''
-      }
+      },
+      user: {},
+      token: null || localStorage.getItem('token'),
+      userId: null || localStorage.getItem('userId')
     }
   },
   actions: {
@@ -74,18 +74,46 @@ export default {
     },
     activateAccount (_, payload) {
       return request('/api/users/activate', 'patch', payload)
+    },
+    requestLogin ({ commit }, payload) {
+      return request('/api/users/login', 'post', payload, (data) => {
+        commit('setCredentials', data.data)
+        localStorage.setItem('token', data.data.token)
+        localStorage.setItem('userId', data.data.userId)
+      })
+    },
+    getUser ({ commit }, payload) {
+      return request(`/api/users/${payload}`, 'get', {}, (data) => {
+        commit('setUser', data.data)
+      })
     }
   },
   mutations: {
-    updateRegister ({ registerData }, payload) {
-      registerData.userName = payload.userName
-      registerData.email = payload.email
-      registerData.password = payload.password
+    updateRegister (state, payload) {
+      state.registerData.userName = payload.userName
+      state.registerData.email = payload.email
+      state.registerData.password = payload.password
+    },
+    setUser (state, payload) {
+      state.user = payload
+    },
+    setCredentials (state, payload) {
+      state.token = payload.token
+      state.userId = payload.userId
     }
   },
   getters: {
-    registerData ({ registerData }) {
-      return registerData
+    registerData (state) {
+      return state.registerData
+    },
+    user (state) {
+      return state.user
+    },
+    credentials (state) {
+      return {
+        token: state.token,
+        userId: state.userId
+      }
     }
   }
 }

@@ -23,7 +23,10 @@
       <p class="invalid-feedback m-0" v-if="passwordValidity === 'tooShort'">Password too short!</p>
     </div>
     <div class="d-grid">
-      <button class="btn btn-primary" type="submit">Login</button>
+      <button class="btn btn-primary" :class="{ disabled: isLoading }" type="submit">
+        <span v-if="!isLoading">Login</span>
+        <div class="loader" v-if="isLoading"></div>
+      </button>
     </div>
   </form>
   <p class="small text-muted text-center">Don’t have an account? Let’s <router-link to=/auth/register>Register</router-link></p>
@@ -31,11 +34,13 @@
 
 <script>
 import swal from 'sweetalert2'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Login',
   data () {
     return {
+      isLoading: false,
       email: '',
       emailValidity: 'pending',
       password: '',
@@ -43,6 +48,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['requestLogin']),
     validateEmail () {
       if (this.email === '') {
         return this.emailValidity = 'blank'
@@ -61,7 +67,7 @@ export default {
       }
       this.passwordValidity = 'valid'
     },
-    login () {
+    async login () {
       if (this.emailValidity !== 'valid' || this.passwordValidity !== 'valid') {
         return swal.fire('Error', 'Fill the forms with a valid value!', 'error')
       }
@@ -70,12 +76,34 @@ export default {
         email: this.email,
         password: this.password
       }
-      console.log(data)
+
+      try {
+        this.isLoading = true
+        await this.requestLogin(data)
+        this.isLoading = false
+        this.$router.push({ path: '/home' })
+      } catch (error) {
+        swal.fire(error.status, error.message, 'error')
+        this.isLoading = false
+      }
     }
   }
 }
 </script>
 
 <style scoped lang="css">
+.loader {
+  margin: auto;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid rgba(255, 255, 255, .15);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+}
 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
