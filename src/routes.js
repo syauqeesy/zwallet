@@ -1,6 +1,7 @@
 import Auth from './pages/auth/Auth'
 import Register from './pages/auth/Register'
 import CreatePIN from './pages/auth/CreatePIN'
+import AccountActivation from './pages/AccountActivation'
 import Login from './pages/auth/Login'
 
 export default [
@@ -22,5 +23,9 @@ export default [
         component: Login
       }
     ]
+  },
+  {
+    path: '/activate',
+    component: AccountActivation
   }
 ]
