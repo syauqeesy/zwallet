@@ -6,6 +6,8 @@ import Login from './pages/auth/Login'
 
 import Home from './pages/main/Home'
 import SearchReceiver from './pages/main/SearchReceiver'
+import InputAmount from './pages/main/InputAmount'
+import TransferResult from './pages/main/TransferResult'
 
 export default [
   {
@@ -45,6 +47,18 @@ export default [
     path: '/search-receiver',
     name: 'SearchReceiver',
     component: SearchReceiver,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/input-amount/:id',
+    name: 'InputAmount',
+    component: InputAmount,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/transfer-result/:id',
+    name: 'TransferResult',
+    component: TransferResult,
     meta: { requiresAuth: true }
   }
 ]

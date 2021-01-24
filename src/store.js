@@ -65,8 +65,10 @@ export default {
       },
       user: {},
       users: [],
+      receiver: {},
       token: null || localStorage.getItem('token'),
-      userId: null || localStorage.getItem('userId')
+      userId: null || localStorage.getItem('userId'),
+      transfer: {}
     }
   },
   actions: {
@@ -92,7 +94,20 @@ export default {
       return request(`/api/users?keyword=${payload.keyword}&page=${payload.page || 1}`, 'get', {}, (data) => {
         commit('setUsers', data.data)
       })
-    }
+    },
+    getReceiver ({ commit }, payload) {
+      return request(`/api/users/${payload}`, 'get', {}, (data) => {
+        commit('setReceiver', data.data)
+      })
+    },
+    requestTransfer (_, payload) {
+      return request('/api/transactions/create/transfer', 'post', payload)
+    },
+    getTransferById ({ commit }, payload) {
+      return request(`/api/transactions/transfer/${payload}`, 'get', {}, (data) => {
+        commit('setTransfer', data.data)
+      })
+    },
   },
   mutations: {
     updateRegister (state, payload) {
@@ -103,12 +118,18 @@ export default {
     setUser (state, payload) {
       state.user = payload
     },
+    setReceiver (state, payload) {
+      state.receiver = payload
+    },
     setUsers (state, payload) {
       state.users = payload
     },
     setCredentials (state, payload) {
       state.token = payload.token
       state.userId = payload.userId
+    },
+    setTransfer (state, payload) {
+      state.transfer = payload
     }
   },
   getters: {
@@ -121,11 +142,17 @@ export default {
     users (state) {
       return state.users
     },
+    receiver (state) {
+      return state.receiver
+    },
     credentials (state) {
       return {
         token: state.token,
         userId: state.userId
       }
-    }
+    },
+    transfer (state) {
+      return state.transfer
+    },
   }
 }
