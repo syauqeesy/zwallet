@@ -9,6 +9,7 @@ import SearchReceiver from './pages/main/SearchReceiver'
 import InputAmount from './pages/main/InputAmount'
 import TransferResult from './pages/main/TransferResult'
 import Profile from './pages/main/Profile'
+import EditProfile from './pages/main/EditProfile'
 
 export default [
   {
@@ -66,6 +67,12 @@ export default [
     path: '/profile',
     name: 'Profile',
     component: Profile,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/edit-profile',
+    name: 'EditProfile',
+    component: EditProfile,
     meta: { requiresAuth: true }
   }
 ]
