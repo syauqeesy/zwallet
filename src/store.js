@@ -68,7 +68,8 @@ export default {
       receiver: {},
       token: null || localStorage.getItem('token'),
       userId: null || localStorage.getItem('userId'),
-      transfer: {}
+      transfer: {},
+      transfers: []
     }
   },
   actions: {
@@ -108,6 +109,11 @@ export default {
         commit('setTransfer', data.data)
       })
     },
+    getTransfers ({ commit }, payload) {
+      return request(`/api/transactions/transfer/history/${payload}`, 'get', {}, (data) => {
+        commit('setTransfers', data.data)
+      })
+    },
     updateProfile ({ dispatch }, payload) {
       return request(`/api/users/${payload.get('id')}`, 'patch', payload, () => {
         dispatch('getUser', payload.get('id'))
@@ -135,6 +141,9 @@ export default {
     },
     setTransfer (state, payload) {
       state.transfer = payload
+    },
+    setTransfers (state, payload) {
+      state.transfers = payload
     }
   },
   getters: {
@@ -159,5 +168,8 @@ export default {
     transfer (state) {
       return state.transfer
     },
+    transfers (state) {
+      return state.transfers
+    }
   }
 }
