@@ -1,6 +1,6 @@
 <template>
   <Header :avatar="user.avatar" :fullName="user.firstName + ' ' + user.lastName" :phoneNumber="user.phoneNumber" />
-  <div class="InputAmount row container mx-auto">
+  <div class="TransferResult row container mx-auto">
     <Aside />
     <main class="col-md-8 p-3">
       <div class="row">
@@ -61,7 +61,7 @@ import Aside from '@/components/Aside'
 import moment from 'moment'
 
 export default {
-  name: 'InputAmount',
+  name: 'TransferResult',
   data () {
     return {
       isSuccess: true,

@@ -108,6 +108,11 @@ export default {
         commit('setTransfer', data.data)
       })
     },
+    updateProfile ({ dispatch }, payload) {
+      return request(`/api/users/${payload.get('id')}`, 'patch', payload, () => {
+        dispatch('getUser', payload.get('id'))
+      })
+    }
   },
   mutations: {
     updateRegister (state, payload) {

@@ -8,6 +8,7 @@ import Home from './pages/main/Home'
 import SearchReceiver from './pages/main/SearchReceiver'
 import InputAmount from './pages/main/InputAmount'
 import TransferResult from './pages/main/TransferResult'
+import Profile from './pages/main/Profile'
 
 export default [
   {
@@ -59,6 +60,12 @@ export default [
     path: '/transfer-result/:id',
     name: 'TransferResult',
     component: TransferResult,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
     meta: { requiresAuth: true }
   }
 ]
