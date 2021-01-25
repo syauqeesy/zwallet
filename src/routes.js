@@ -10,6 +10,7 @@ import InputAmount from './pages/main/InputAmount'
 import TransferResult from './pages/main/TransferResult'
 import Profile from './pages/main/Profile'
 import EditProfile from './pages/main/EditProfile'
+import ChangePassword from './pages/main/ChangePassword'
 
 export default [
   {
@@ -73,6 +74,12 @@ export default [
     path: '/edit-profile',
     name: 'EditProfile',
     component: EditProfile,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/change-password',
+    name: 'ChangePassword',
+    component: ChangePassword,
     meta: { requiresAuth: true }
   }
 ]
