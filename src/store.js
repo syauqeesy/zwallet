@@ -110,7 +110,7 @@ export default {
       })
     },
     getTransfers ({ commit }, payload) {
-      return request(`/api/transactions/transfer/history/${payload}`, 'get', {}, (data) => {
+      return request(`/api/transactions/transfer/history/${payload.userId}/?page=${payload.page || 1}`, 'get', {}, (data) => {
         commit('setTransfers', data.data)
       })
     },
