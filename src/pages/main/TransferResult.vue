@@ -51,6 +51,7 @@
       </div>
     </main>
   </div>
+  <Footer />
 </template>
 
 <script>
@@ -58,6 +59,7 @@ import { mapActions, mapGetters } from 'vuex'
 import swal from 'sweetalert2'
 import Header from '@/components/Header'
 import Aside from '@/components/Aside'
+import Footer from '@/components/Footer'
 import moment from 'moment'
 
 export default {
@@ -71,7 +73,8 @@ export default {
   },
   components: {
     Header,
-    Aside
+    Aside,
+    Footer
   },
   computed: {
     ...mapGetters(['user', 'credentials', 'transfer'])

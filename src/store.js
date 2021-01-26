@@ -69,7 +69,8 @@ export default {
       token: null || localStorage.getItem('token'),
       userId: null || localStorage.getItem('userId'),
       transfer: {},
-      transfers: []
+      transfers: [],
+      transfersPagination: {}
     }
   },
   actions: {
@@ -110,8 +111,9 @@ export default {
       })
     },
     getTransfers ({ commit }, payload) {
-      return request(`/api/transactions/transfer/history/${payload.userId}/?page=${payload.page || 1}`, 'get', {}, (data) => {
+      return request(`/api/transactions/transfer/history/${payload.userId}/?page=${payload.page || 1}&sortBy=${payload.sortBy || 'createdAt'}&order=${payload.order || 'DESC'}`, 'get', {}, (data) => {
         commit('setTransfers', data.data)
+        commit('setTransfersPagination', data.dataPagination)
       })
     },
     updateProfile ({ dispatch }, payload) {
@@ -144,6 +146,9 @@ export default {
     },
     setTransfers (state, payload) {
       state.transfers = payload
+    },
+    setTransfersPagination (state, payload) {
+      state.transfersPagination = payload
     }
   },
   getters: {
@@ -170,6 +175,9 @@ export default {
     },
     transfers (state) {
       return state.transfers
+    },
+    transfersPagination (state) {
+      return state.transfersPagination
     }
   }
 }

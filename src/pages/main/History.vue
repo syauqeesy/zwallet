@@ -4,6 +4,17 @@
     <Aside />
     <main class="col-md-8 p-3">
       <h2>Transfer history</h2>
+      <nav v-if="transfers.length > 0" class="mt-5">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" :class="{ disabled: !transfersPagination.previous }">
+            <router-link class="page-link" :to="{ path: '/history', query: { page: transfersPagination.previous } }">Previous</router-link>
+          </li>
+          <li class="page-item disabled"><a class="page-link">{{ transfersPagination.current }}</a></li>
+          <li class="page-item" :class="{ disabled: !transfersPagination.next }">
+            <router-link class="page-link" :to="{ path: '/history', query: { page: transfersPagination.next } }">Next</router-link>
+          </li>
+        </ul>
+      </nav>
       <div class="row mt-5 justify-content-center">
         <div class="col-md-8">
           <ul class="list-group"  v-if="transfers.length > 0">
@@ -23,6 +34,7 @@
       </div>
     </main>
   </div>
+  <Footer />
 </template>
 
 <script>
@@ -30,6 +42,7 @@ import { mapActions, mapGetters } from 'vuex'
 import swal from 'sweetalert2'
 import Header from '@/components/Header'
 import Aside from '@/components/Aside'
+import Footer from '@/components/Footer'
 
 export default {
   name: 'History',
@@ -40,10 +53,11 @@ export default {
   },
   components: {
     Header,
-    Aside
+    Aside,
+    Footer
   },
   computed: {
-    ...mapGetters(['user', 'credentials', 'transfers']),
+    ...mapGetters(['user', 'credentials', 'transfers', 'transfersPagination']),
     biggestAmount () {
       const transfers = this.transfers
         const amounts = transfers.sort((a, b) => {
@@ -68,6 +82,20 @@ export default {
   },
   methods: {
     ...mapActions(['getUser', 'getTransfers'])
+  },
+  watch: {
+    async $route () {
+      try {
+        await this.getTransfers({
+          userId: this.credentials.userId,
+          page: this.$route.query.page || 1
+        })
+      } catch (error) {
+        if (error.message !== 'Access denied') {
+          swal.fire(error.status, error.message, 'error')
+        }
+      }
+    }
   }
 }
 </script>
