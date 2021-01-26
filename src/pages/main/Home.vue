@@ -34,7 +34,7 @@
         <div class="col-md-5 mb-2">
           <div class="d-flex justify-content-between">
             <p class="fw-bold">Transaction history</p>
-            <!-- <router-link to="/home" class="d-block text-end mb-3">see all</router-link> -->
+            <router-link to="/history" class="d-block text-end mb-3">see all</router-link>
           </div>
           <ul class="list-group"  v-if="transfers.length > 0">
             <li v-for="transfer in transfers" :key="transfer.id" class="list-group-item d-flex justify-content-between align-items-center" :data-coba="transfer.sender.id">
@@ -83,6 +83,7 @@ export default {
     }
   },
   async mounted () {
+    console.log('dijalankan')
     try {
       this.baseUrl = process.env.VUE_APP_BACKEND_URL
       await this.getUser(this.credentials.userId)
@@ -91,7 +92,9 @@ export default {
         page: this.$route.query.page || 1
       })
     } catch (error) {
-      swal.fire(error.status, error.message, 'error')
+      if (error.message !== 'Access denied') {
+        swal.fire(error.status, error.message, 'error')
+      }
     }
   },
   methods: {
