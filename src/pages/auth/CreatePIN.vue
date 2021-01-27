@@ -113,6 +113,12 @@ export default {
       const securityPINConfirmation = this.firstDigitConfirmation + this.secondDigitConfirmation + this.thirdDigitConfirmation + this.forthDigitConfirmation + this.fifthDigitConfirmation + this.sixthDigitConfirmation
 
       if (securityPINConfirmation !== securityPIN) {
+        this.firstDigitConfirmation = ''
+        this.secondDigitConfirmation = ''
+        this.thirdDigitConfirmation = ''
+        this.forthDigitConfirmation = ''
+        this.fifthDigitConfirmation = ''
+        this.sixthDigitConfirmation = ''
         return swal.fire('Failed', 'Security PIN not match!', 'error')
       }
 
