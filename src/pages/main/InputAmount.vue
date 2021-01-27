@@ -50,22 +50,22 @@
                 <div class="modal-body">
                   <div class="row">
                     <div class="col-2">
-                      <input type="text" class="form-control text-center" v-model="firstDigit">
+                      <input type="password" class="form-control text-center" v-model="firstDigit">
                     </div>
                     <div class="col-2">
-                      <input type="text" class="form-control text-center" v-model="secondDigit">
+                      <input type="password" class="form-control text-center" v-model="secondDigit">
                     </div>
                     <div class="col-2">
-                      <input type="text" class="form-control text-center" v-model="thirdDigit">
+                      <input type="password" class="form-control text-center" v-model="thirdDigit">
                     </div>
                     <div class="col-2">
-                      <input type="text" class="form-control text-center" v-model="forthDigit">
+                      <input type="password" class="form-control text-center" v-model="forthDigit">
                     </div>
                     <div class="col-2">
-                      <input type="text" class="form-control text-center" v-model="fifthDigit">
+                      <input type="password" class="form-control text-center" v-model="fifthDigit">
                     </div>
                     <div class="col-2">
-                      <input type="text" class="form-control text-center" v-model="sixthDigit">
+                      <input type="password" class="form-control text-center" v-model="sixthDigit">
                     </div>
                   </div>
                 </div>
