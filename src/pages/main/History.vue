@@ -75,9 +75,12 @@ export default {
         page: this.$route.query.page || 1
       })
     } catch (error) {
-      if (error.message !== 'Access denied') {
-        swal.fire(error.status, error.message, 'error')
+      if (error.message === 'Access denied') {
+        localStorage.removeItem('userId')
+        localStorage.removeItem('token')
+        return this.$router.push('/auth/login')
       }
+      swal.fire(error.status, error.message, 'error')
     }
   },
   methods: {

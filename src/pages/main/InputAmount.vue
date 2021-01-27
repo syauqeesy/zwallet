@@ -145,6 +145,11 @@ export default {
         const result = await this.requestTransfer(data)
         this.$router.push({ path: `/transfer-result/${result.data}` })
       } catch (error) {
+        if (error.message === 'Access denied') {
+          localStorage.removeItem('userId')
+          localStorage.removeItem('token')
+          return this.$router.push('/auth/login')
+        }
         swal.fire(error.status, error.message, 'error')
       }
     }
