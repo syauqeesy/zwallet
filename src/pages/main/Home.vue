@@ -7,7 +7,7 @@
         <div class="card-body row">
           <div class="col-md-10 mb-1">
             <p class="small mb-1">Balance</p>
-            <p class="fw-bold fs-3">{{ user.balance }}</p>
+            <p class="fw-bold fs-3">Rp{{ user.balance }}</p>
             <p class="small mb-0 mt-1">{{ user.phoneNumber }}</p>
           </div>
           <div class="col-md-2 mt-1">
@@ -22,12 +22,10 @@
       </div>
       <div class="row mt-4">
         <div class="col-md-7 mb-2">
-          <div class="card" style="height: 250px;">
-            <div class="card-header">Weekly activitiy</div>
-            <div class="card-body d-flex justify-content-around align-items-end">
-              <div v-for="transfer in transfers" :key="transfer.id" class="bar bg-primary rounded-pill" :style="{ width: '10px', height: parseInt(transfer.amount) / biggestAmount * 100 + '%', position: 'relative' }">
-                <p class="position-absolute bg-light small text-muted">Rp{{ transfer.amount }}</p>
-              </div>
+          <div class="card border-primary">
+            <div class="card-header  text-white bg-primary">Weekly activitiy</div>
+            <div class="card-body">
+              <apexchart width="100%" type="bar" :options="chartOptions" :series="chartSeries"></apexchart>
             </div>
           </div>
         </div>
@@ -59,6 +57,7 @@ import swal from 'sweetalert2'
 import Header from '@/components/Header'
 import Aside from '@/components/Aside'
 import Footer from '@/components/Footer'
+import moment from 'moment'
 
 export default {
   name: 'Home',
@@ -74,16 +73,27 @@ export default {
   },
   computed: {
     ...mapGetters(['user', 'credentials', 'transfers']),
-    biggestAmount () {
-      const transfers = this.transfers
-        const amounts = transfers.sort((a, b) => {
-          return parseInt(b.amount) - parseInt(a.amount)
-        })
-        return amounts[0].amount
+    chartOptions () {
+      return {
+        chart: {
+          id: "vuechart-example",
+        },
+        colors: ['#0D6EFD'],
+        xaxis: {
+          categories: this.transfers.map(transfer => moment(transfer.createdAt).format('ddd')),
+        }
+      }
+    },
+    chartSeries () {
+      return [
+        {
+          name: 'Transfer Amount',
+          data: this.transfers.map(transfer => transfer.amount)
+        }
+      ]
     }
   },
   async mounted () {
-    console.log('dijalankan')
     try {
       this.baseUrl = process.env.VUE_APP_BACKEND_URL
       await this.getUser(this.credentials.userId)

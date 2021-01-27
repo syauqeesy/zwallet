@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { createStore } from 'vuex'
 import routes from './routes'
 import store from './store'
+import VueApexCharts from 'vue3-apexcharts'
 import App from './App.vue'
 
 const router = createRouter({
@@ -37,5 +38,6 @@ const vuexStore = createStore(store)
 
 app.use(router)
 app.use(vuexStore)
+app.use(VueApexCharts)
 
 app.mount('#app')
