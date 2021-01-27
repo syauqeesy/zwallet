@@ -33,20 +33,17 @@
         </div>
         <div class="col-md-5 mb-2">
           <div class="d-flex justify-content-between">
-            <p class="fw-bold">Transaction history</p>
+            <p class="fw-bold">Transfer history</p>
             <router-link to="/history" class="d-block text-end mb-3">see all</router-link>
           </div>
           <ul class="list-group"  v-if="transfers.length > 0">
-            <li v-for="transfer in transfers" :key="transfer.id" class="list-group-item d-flex justify-content-between align-items-center" :data-coba="transfer.sender.id">
-              <img v-if="transfer.sender.id !== credentials.userId" :src="transfer.sender.avatar" class="avatar-picture sender" alt="Profile">
-              <img  v-if="transfer.sender.id === credentials.userId" :src="baseUrl + '/images/' + transfer.transfer.receiver.avatar" class="avatar-picture" alt="Profile">
+            <li v-for="transfer in transfers" :key="transfer.id" class="list-group-item d-flex align-items-center">
+              <img :src="baseUrl + '/images/' + transfer.transfer.receiver.avatar" class="avatar-picture me-3" alt="Profile">
               <span class="d-flex flex-column align-items-start justify-content-center">
-                <p class="fw-bold my-0" v-if="transfer.sender.id !== credentials.userId">{{ transfer.sender.firstName + ' ' + transfer.sender.lastName }}</p>
-                <p class="fw-bold my-0" v-if="transfer.sender.id === credentials.userId">{{ transfer.transfer.receiver.firstName + ' ' + transfer.transfer.receiver.lastName }}</p>
+                <p class="fw-bold my-0">{{ transfer.transfer.receiver.firstName + ' ' + transfer.transfer.receiver.lastName }}</p>
                 <p class="small text-muted my-0">Transfer</p>
               </span>
-              <p class="text-success fw-bold" v-if="transfer.sender.id !== credentials.userId">+Rp{{ transfer.amount }}</p>
-              <p class="text-danger fw-bold" v-if="transfer.sender.id === credentials.userId">-Rp{{ transfer.amount }}</p>
+              <p class="fw-bold ms-auto">Rp{{ transfer.amount }}</p>
             </li>
           </ul>
         </div>
