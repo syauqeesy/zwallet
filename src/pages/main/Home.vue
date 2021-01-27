@@ -39,7 +39,7 @@
               <img :src="baseUrl + '/images/' + transfer.transfer.receiver.avatar" class="avatar-picture me-3" alt="Profile">
               <span class="d-flex flex-column align-items-start justify-content-center">
                 <p class="fw-bold my-0">{{ transfer.transfer.receiver.firstName + ' ' + transfer.transfer.receiver.lastName }}</p>
-                <p class="small text-muted my-0">Transfer</p>
+                <p class="small text-muted my-0">{{ moment(transfer.createdAt).format('L') }}</p>
               </span>
               <p class="fw-bold ms-auto">Rp{{ transfer.amount }}</p>
             </li>
@@ -63,7 +63,8 @@ export default {
   name: 'Home',
   data () {
     return {
-      baseUrl: ''
+      baseUrl: '',
+      moment
     }
   },
   components: {

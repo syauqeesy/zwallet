@@ -4,6 +4,37 @@
     <Aside />
     <main class="col-md-8 p-3">
       <h2>Transfer history</h2>
+      <div class="row justify-content-end mt-5">
+        <div class="col-3">
+          <label for="sortBy">Sort</label>
+          <select id="sortBy" v-model="sortBy" @change="$router.push({ path: '/history', query: { page: $route.query.page || 1, sortBy: sortBy, order: $route.query.order || 'DESC' } })" class="form-select">
+            <option selected>Sort</option>
+            <option value="createdAt">Date</option>
+            <option value="amount">Amount</option>
+          </select>
+        </div>
+        <div class="col-3">
+          <label for="order">Order</label>
+          <select id="order" v-model="order" @change="$router.push({ path: '/history', query: { page: $route.query.page || 1, order: order, sortBy: $route.query.sortBy || 'createdAt' } })" class="form-select">
+            <option value="ASC">ASC</option>
+            <option value="DESC">DESC</option>
+          </select>
+        </div>
+      </div>
+      <div class="row mt-4 justify-content-center">
+        <div class="col-md-8">
+          <ul class="list-group" v-if="transfers.length > 0">
+            <li v-for="transfer in transfers" :key="transfer.id" class="list-group-item d-flex align-items-center">
+              <img :src="baseUrl + '/images/' + transfer.transfer.receiver.avatar" class="avatar-picture me-3" alt="Profile">
+              <span class="d-flex flex-column align-items-start justify-content-center">
+                <p class="fw-bold my-0">{{ transfer.transfer.receiver.firstName + ' ' + transfer.transfer.receiver.lastName }}</p>
+                <p class="small text-muted my-0">{{ moment(transfer.createdAt).format('L') }}</p>
+              </span>
+              <p class="fw-bold ms-auto">Rp{{ transfer.amount }}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
       <nav v-if="transfers.length > 0" class="mt-5">
         <ul class="pagination justify-content-center">
           <li class="page-item" :class="{ disabled: !transfersPagination.previous }">
@@ -15,20 +46,6 @@
           </li>
         </ul>
       </nav>
-      <div class="row mt-5 justify-content-center">
-        <div class="col-md-8">
-          <ul class="list-group"  v-if="transfers.length > 0">
-            <li v-for="transfer in transfers" :key="transfer.id" class="list-group-item d-flex align-items-center">
-              <img :src="baseUrl + '/images/' + transfer.transfer.receiver.avatar" class="avatar-picture me-3" alt="Profile">
-              <span class="d-flex flex-column align-items-start justify-content-center">
-                <p class="fw-bold my-0">{{ transfer.transfer.receiver.firstName + ' ' + transfer.transfer.receiver.lastName }}</p>
-                <p class="small text-muted my-0">Transfer</p>
-              </span>
-              <p class="fw-bold ms-auto">Rp{{ transfer.amount }}</p>
-            </li>
-          </ul>
-        </div>
-      </div>
     </main>
   </div>
   <Footer />
@@ -40,12 +57,16 @@ import swal from 'sweetalert2'
 import Header from '@/components/Header'
 import Aside from '@/components/Aside'
 import Footer from '@/components/Footer'
+import moment from 'moment'
 
 export default {
   name: 'History',
   data () {
     return {
-      baseUrl: ''
+      baseUrl: '',
+      moment,
+      order: '',
+      sortBy: ''
     }
   },
   components: {
@@ -69,7 +90,9 @@ export default {
       await this.getUser(this.credentials.userId)
       await this.getTransfers({
         userId: this.credentials.userId,
-        page: this.$route.query.page || 1
+        page: this.$route.query.page || 1,
+        sortBy: this.$route.query.sortBy || 'createdAt',
+        order: this.$route.query.order || 'DESC'
       })
     } catch (error) {
       if (error.message === 'Access denied') {
@@ -88,7 +111,9 @@ export default {
       try {
         await this.getTransfers({
           userId: this.credentials.userId,
-          page: this.$route.query.page || 1
+          page: this.$route.query.page || 1,
+          sortBy: this.$route.query.sortBy || 'createdAt',
+          order: this.$route.query.order || 'DESC'
         })
       } catch (error) {
         if (error.message !== 'Access denied') {
