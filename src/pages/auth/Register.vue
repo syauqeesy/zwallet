@@ -21,6 +21,7 @@
       <input type="text" class="form-control" :class="{'is-invalid': emailValidity !== 'valid' && emailValidity !== 'pending'}" v-model.trim="email" @blur="validateEmail" placeholder="Enter your email">
       <p class="invalid-feedback m-0" v-if="emailValidity === 'blank'">Email is required!</p>
       <p class="invalid-feedback m-0" v-if="emailValidity === 'tooShort'">Email too short!</p>
+      <p class="invalid-feedback m-0" v-if="emailValidity === 'invalidEmail'">Email is invalid!</p>
     </div>
     <div class="input-group mb-5">
       <span class="input-group-text">
@@ -71,12 +72,17 @@ export default {
       this.userNameValidity = 'valid'
     },
     validateEmail () {
+      const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       if (this.email === '') {
         return this.emailValidity = 'blank'
       }
       if (this.email.length < 8) {
         return this.emailValidity = 'tooShort'
       }
+      if (!regex.test(this.email)) {
+        return this.emailValidity = 'invalidEmail'
+      }
+
       this.emailValidity = 'valid'
     },
     validatePassword () {
