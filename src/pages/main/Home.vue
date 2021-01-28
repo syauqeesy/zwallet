@@ -77,11 +77,11 @@ export default {
     chartOptions () {
       return {
         chart: {
-          id: "vuechart-example",
+          id: "Weekly activity chart",
         },
         colors: ['#0D6EFD'],
         xaxis: {
-          categories: this.transfers.map(transfer => moment(transfer.createdAt).format('ddd')),
+          categories: [...new Set(this.transfers.map(transfer => moment(transfer.createdAt).format('L')))].map(item => moment(item).format('ddd')),
         }
       }
     },

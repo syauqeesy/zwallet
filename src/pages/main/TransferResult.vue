@@ -2,7 +2,7 @@
   <Header :avatar="user.avatar" :fullName="user.firstName + ' ' + user.lastName" :phoneNumber="user.phoneNumber" />
   <div class="TransferResult row container mx-auto">
     <Aside />
-    <main class="col-md-8 p-3">
+    <main class="col-md-8 p-3" ref="result">
       <div class="row">
         <div class="col-12 mb-5">
           <img src="@/assets/success.png" class="d-block mx-auto" alt="Failed">
@@ -41,7 +41,7 @@
         <div class="col-12 mt-4">
           <div class="row justify-content-end">
             <div class="col-md-3 d-grid mt-2">
-              <button class="btn btn-outline-primary">Print PDF</button>
+              <button class="btn btn-outline-primary" @click="generatePDF">Print PDF</button>
             </div>
             <div class="col-md-3 d-grid mt-2">
               <button class="btn btn-primary" @click="$router.push({ path: '/home' })">Back to home</button>
@@ -61,6 +61,7 @@ import Header from '@/components/Header'
 import Aside from '@/components/Aside'
 import Footer from '@/components/Footer'
 import moment from 'moment'
+import { jsPDF } from "jspdf";
 
 export default {
   name: 'TransferResult',
@@ -96,7 +97,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getUser', 'getTransferById'])
+    ...mapActions(['getUser', 'getTransferById']),
+    generatePDF () {
+      const doc = new jsPDF();
+
+      doc.text(`
+            Transfer
+            -----------------------------------------------------------------
+
+
+            Amount : Rp${this.transfer.amount}
+            Balance left : Rp${ this.user.balance }
+            Date & time : ${ moment(this.transfer.createdAt).format('MMMM D YYYY - LT') }
+            Notes : ${ this.transfer.notes }
+            To : ${this.receiver.firstName + ' ' + this.receiver.lastName}
+      `, 10, 10);
+      doc.save('transfer-result.pdf')
+    }
   }
 }
 </script>
