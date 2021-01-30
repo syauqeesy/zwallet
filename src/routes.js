@@ -15,6 +15,10 @@ import History from './pages/main/History'
 
 export default [
   {
+    path: '/',
+    redirect: '/auth/login'
+  },
+  {
     path: '/auth',
     component: Auth,
     meta: { requiresVisitor: true },
