@@ -5,7 +5,7 @@
     <main class="col-md-8 p-3">
       <h2 class="fs-4 mb-5">Change password</h2>
       <form @submit.prevent="update">
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-md-8 mb-3">
             <label for="currentPassword" class="form-label">Current password</label>
             <input type="password" class="form-control" id="currentPassword" :class="{'is-invalid': currentPasswordValidity !== 'valid' && currentPasswordValidity !== 'pending'}" v-model.trim="currentPassword" @blur="validateCurrentPassword" placeholder="Current password" autocomplete="off">
@@ -26,7 +26,7 @@
             <p class="invalid-feedback m-0" v-if="passwordConfirmationValidity === 'notMatch'">Password confirmation is not match!</p>
           </div>
         </div>
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-md-8 d-grid mb-3">
             <button class="btn btn-primary" type="submit">Change password</button>
           </div>

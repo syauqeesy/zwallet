@@ -24,6 +24,11 @@
           <button class="btn btn-outline-secondary" @click="$router.push({ path: '/change-password' })">Change password</button>
         </div>
       </div>
+      <div class="row justify-content-center">
+        <div class="col-md-6 d-grid mt-3">
+          <button class="btn btn-outline-secondary" @click="$router.push({ path: '/change-pin' })">Change PIN</button>
+        </div>
+      </div>
       <div class="row mt-3 justify-content-center">
         <div class="col-md-6 d-grid">
           <button class="btn btn-outline-danger" @click="logout">Logout</button>
