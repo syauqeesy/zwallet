@@ -65,7 +65,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 <p align='center'>
   <span>
     <image width="200" src='./screenshots/zwallet-4.png' />
-    <image width="200" src='./screenshots/zwallet-5.pngg' />
+    <image width="200" src='./screenshots/zwallet-5.png' />
     <image width="200" src='./screenshots/zwallet-6.png' />
 
 
