@@ -23,7 +23,7 @@
       <div class="row mt-4">
         <div class="col-md-7 mb-2">
           <div class="card border-primary">
-            <div class="card-header  text-white bg-primary">Last activitiy</div>
+            <div class="card-header  text-white bg-primary">Last activity</div>
             <div class="card-body">
               <apexchart width="100%" type="bar" :options="chartOptions" :series="chartSeries"></apexchart>
             </div>
