@@ -27,7 +27,7 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
 ```sh
-git clone https://github.com/hanifkumara/telegram-app.git
+git clone https://github.com/syauqeesy/zwallet.git
 ```
 2. Install Yarn packages
 
@@ -52,7 +52,7 @@ yarn build
 
 ### Lints and fixes files
 ```
-yarn run lint
+yarn lint
 ```
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
